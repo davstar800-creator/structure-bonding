@@ -1,1 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STETHS Grade 10 Chemistry - Structure & Bonding</title>
+    <style>
+        :root {
+            --navy-blue: #002147;
+            --gold: #FFD700;
+            --white: #FFFFFF;
+            --light-gray: #f4f6f8;
+            --dark-gray: #333333;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--navy-blue);
+            color: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header h2 {
+            margin: 10px 0 0;
+            font-size: 18px;
+            color: var(--gold);
+            font-weight: normal;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .instructions {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-left: 5px solid var(--gold);
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .instructions strong {
+            color: var(--navy-blue);
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .question-text {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--navy-blue);
+        }
+
+        .options label {
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background-color: var(--light-gray);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .options label:hover {
+            background-color: #e2e6ea;
+            border-color: var(--navy-blue);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--navy-blue);
+            color: var(--white);
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #001530;
+        }
+
+        .btn-retake {
+            background-color: var(--gold);
+            color: var(--navy-blue);
+            display: none;
+        }
+
+        .btn-retake:hover {
+            background-color: #e6c200;
+        }
+
+        #results-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 30px;
+            background-color: var(--navy-blue);
+            color: var(--white);
+            border-radius: 8px;
+            border: 3px solid var(--gold);
+        }
+
+        #results-container h2 {
+            margin-top: 0;
+            color: var(--gold);
+        }
+
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .option-correct {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            font-weight: bold;
+        }
+
+        .option-incorrect {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>STETHS Grade 10 Chemistry</h1>
+        <h2>Practice Test: Structure & Bonding (CXC CSEC)</h2>
+    </header>
+
+    <div class="container">
+        <div class="instructions">
+            <p><strong>Total Marks:</strong> 40 | <strong>Time Allowed:</strong> 60 minutes</p>
+            <p><strong>Topics Covered:</strong> Electronic configuration, ionic and covalent bonding (dot-and-cross diagrams), properties of ionic, simple molecular, giant covalent, and metallic structures, and allotropes of carbon (diamond and graphite).</p>
+            <p><strong>Instructions:</strong> Read each question carefully. Choose the single best answer. Your results and detailed explanations will be displayed immediately after you submit the test.</p>
+        </div>
+
+        <form id="quiz-form">
+            <div id="quiz-questions">
+                <h3 style="color:red; text-align:center;">Loading questions... (If this message persists, ensure your device's browser allows JavaScript to run).</h3>
+            </div>
+            
+            <div id="results-container">
+                <h2>Your Results</h2>
+                <div class="score-display"><span id="score">0</span> / 40</div>
+                <p id="grade-message"></p>
+            </div>
+
+            <button type="button" class="btn" id="submit-btn" onclick="submitQuiz()">Submit Test</button>
+            <button type="button" class="btn btn-retake" id="retake-btn" onclick="retakeQuiz()">Retake Test</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2026 St. Elizabeth Technical High School. Prepared for the Science Department.
+    </footer>
+
+    <script>
+        var quizData = [
+            // Electronic Configuration & Ions (1-6)
+            { q: "What is the correct electronic configuration for a neutral sodium atom (Atomic number = 11)?", options: ["2,8", "2,8,1", "2,8,2", "2,8,8"], answer: 1, explanation: "Sodium has 11 electrons. They fill the shells as 2 in the first, 8 in the second, and 1 in the outermost shell (2,8,1)." },
+            { q: "When a magnesium atom (Atomic number 12) forms an ion to achieve stability, it:", options: ["Gains 2 electrons to form Mg²⁻", "Loses 2 electrons to form Mg²⁺", "Shares 2 electrons", "Loses 1 electron to form Mg⁺"], answer: 1, explanation: "Magnesium (2,8,2) loses its 2 valence electrons to achieve a stable octet, forming a cation with a 2+ charge." },
+            { q: "What is the electronic configuration of a stable chloride ion (Cl⁻)? Note: Neutral chlorine has atomic number 17.", options: ["2,8,7", "2,8,8", "2,8,6", "2,8,8,1"], answer: 1, explanation: "A neutral chlorine atom is 2,8,7. It gains one electron to become stable, resulting in the configuration 2,8,8." },
+            { q: "Atoms form chemical bonds primarily to achieve the stable electronic configuration of which group of elements?", options: ["Alkali metals", "Halogens", "Noble gases", "Transition metals"], answer: 2, explanation: "Noble gases have a full outer electron shell (usually an octet), which represents maximum chemical stability." },
+            { q: "An element X has an electronic configuration of 2,8,6. What kind of ion is it most likely to form?", options: ["An ion with a 6+ charge", "An ion with a 2+ charge", "An ion with a 2- charge", "It will not form an ion"], answer: 2, explanation: "An element with 6 valence electrons will gain 2 electrons to complete its octet, giving it an overall 2- charge." },
+            { q: "Which of the following particles is a cation?", options: ["A sodium atom", "An oxide ion (O²⁻)", "A potassium ion (K⁺)", "A chlorine molecule (Cl₂)"], answer: 2, explanation: "A cation is a positively charged ion, formed when an atom loses electrons (like K⁺)." },
+
+            // Bonding & Dot-and-Cross Concepts (7-12)
+            { q: "Ionic bonding typically occurs between:", options: ["Two non-metals", "Two metals", "A metal and a non-metal", "Noble gases"], answer: 2, explanation: "Ionic bonds form when a metal transfers electrons to a non-metal, creating oppositely charged ions." },
+            { q: "A covalent bond is defined as:", options: ["The transfer of electrons from one atom to another", "The electrostatic attraction between positive metal ions and delocalized electrons", "The sharing of one or more pairs of valence electrons between atoms", "The magnetic attraction between molecules"], answer: 2, explanation: "Covalent bonds occur between non-metals and involve the sharing of electron pairs." },
+            { q: "In a dot-and-cross diagram for an ionic compound, what is the purpose of the square brackets?", options: ["To show shared electrons", "To indicate the boundaries of the nucleus", "To show that the electron transfer is complete and the atom is now a charged ion", "To represent the full size of the molecule"], answer: 2, explanation: "Brackets are drawn around the completed ion, with its charge placed outside, to indicate the formation of discrete ions." },
+            { q: "How many electrons are shared in a double covalent bond, such as in an oxygen molecule (O₂)?", options: ["2", "4", "6", "8"], answer: 1, explanation: "A single bond shares 1 pair (2 electrons). A double bond shares 2 pairs, which equals 4 electrons total." },
+            { q: "When drawing a dot-and-cross diagram for a water molecule (H₂O), which of the following is correct?", options: ["Oxygen transfers an electron to each hydrogen.", "Hydrogen transfers an electron to oxygen.", "Oxygen shares one electron pair with each of the two hydrogen atoms.", "Oxygen shares two electron pairs with a single hydrogen atom."], answer: 2, explanation: "Water has two single covalent bonds; the oxygen atom shares one pair of electrons with each hydrogen atom." },
+            { q: "The strong force holding atoms together in a covalent bond is the electrostatic attraction between:", options: ["Oppositely charged ions", "The shared electrons and the positive nuclei of both atoms", "Delocalized electrons and positive ions", "Protons and neutrons"], answer: 1, explanation: "In a covalent bond, the positively charged nuclei of the bonding atoms are strongly attracted to the negatively charged shared electron pairs between them." },
+
+            // Ionic Properties & Structure of NaCl (13-19)
+            { q: "Which of the following best describes the physical structure of solid sodium chloride?", options: ["A collection of separate NaCl molecules", "A giant ionic lattice of alternating Na⁺ and Cl⁻ ions", "A sea of electrons surrounding Na and Cl nuclei", "A random arrangement of sodium and chlorine atoms"], answer: 1, explanation: "Ionic compounds like NaCl do not form individual molecules; they exist as massive 3D crystal lattices of alternating positive and negative ions." },
+            { q: "Ionic compounds generally have high melting and boiling points because:", options: ["They contain very heavy atoms.", "They have strong intermolecular forces between molecules.", "A large amount of heat energy is required to break the strong electrostatic forces of attraction in the ionic lattice.", "They are insoluble in water."], answer: 2, explanation: "The ionic bonds (electrostatic attraction between opposite charges) throughout the giant lattice are very strong and require immense energy to break." },
+            { q: "Under what conditions will an ionic compound conduct electricity?", options: ["Only when solid", "When molten (liquid) or dissolved in aqueous solution", "Under all conditions", "Never"], answer: 1, explanation: "To conduct electricity, charged particles must be free to move. In a solid, ions are fixed. In molten or aqueous states, the lattice breaks down and ions are mobile." },
+            { q: "Why does solid sodium chloride NOT conduct electricity?", options: ["It has no charged particles.", "Its electrons are all shared in covalent bonds.", "The Na⁺ and Cl⁻ ions are fixed in the rigid lattice and cannot move.", "The water molecules block the flow of current."], answer: 2, explanation: "While it contains charged particles (ions), they are locked tightly in the crystal structure and cannot move to carry a current." },
+            { q: "What is the general trend regarding the solubility of ionic compounds?", options: ["They are generally insoluble in water but soluble in organic solvents.", "They are generally soluble in water and insoluble in non-polar organic solvents.", "They are insoluble in all solvents.", "They dissolve equally well in water and oil."], answer: 1, explanation: "The polar nature of water molecules allows them to surround and separate the charged ions, dissolving the lattice." },
+            { q: "In the giant ionic lattice of sodium chloride, how many chloride ions immediately surround each sodium ion?", options: ["2", "4", "6", "8"], answer: 2, explanation: "NaCl has a 6:6 coordination geometry. Every Na⁺ ion is surrounded by 6 Cl⁻ ions, and every Cl⁻ is surrounded by 6 Na⁺ ions." },
+            { q: "At room temperature, ionic compounds are typically found in which state of matter?", options: ["Gas", "Liquid", "Plasma", "Solid"], answer: 3, explanation: "Due to their high melting points resulting from strong ionic bonds, they are always solid at room temperature." },
+
+            // Simple Molecular Properties (20-25)
+            { q: "Which of the following is a characteristic property of simple molecular covalent compounds?", options: ["High melting and boiling points", "Conduct electricity when dissolved in water", "Low melting and boiling points", "Hard and brittle"], answer: 2, explanation: "Simple molecular compounds typically have low melting and boiling points because it takes little energy to break the weak intermolecular forces." },
+            { q: "Why do simple molecular substances, like iodine or carbon dioxide, easily turn into gases at relatively low temperatures?", options: ["The strong covalent bonds within the molecules break easily.", "They have weak intermolecular forces holding the separate molecules together.", "The atoms are very small and light.", "They sublime instead of melting."], answer: 1, explanation: "When melting or boiling a simple molecular substance, you break the weak forces between the molecules, NOT the strong covalent bonds inside the molecules." },
+            { q: "Do simple molecular compounds typically conduct electricity?", options: ["Yes, because they contain a sea of electrons.", "Yes, when dissolved in water.", "No, because they have no free mobile ions or delocalized electrons.", "No, because their ions are fixed in a lattice."], answer: 2, explanation: "Simple molecules have no overall electrical charge and no free electrons or ions to carry a current." },
+            { q: "What is the general solubility rule for simple molecular compounds?", options: ["They are highly soluble in water.", "They are generally soluble in non-polar organic solvents but insoluble in water.", "They dissolve in both water and oil equally.", "They react explosively with water."], answer: 1, explanation: "Like dissolves like. Simple, non-polar molecules generally dissolve in non-polar organic solvents (like hexane or ethanol) rather than polar water." },
+            { q: "Which of the following substances consists of simple molecules?", options: ["Diamond", "Sodium chloride", "Water (H₂O)", "Copper metal"], answer: 2, explanation: "Water is a simple molecular compound made of individual H₂O molecules held together by intermolecular forces." },
+            { q: "When drawing a dot-and-cross diagram for an ammonia molecule (NH₃), how many lone pairs (unshared pairs) of electrons are on the central nitrogen atom?", options: ["0", "1", "2", "3"], answer: 1, explanation: "Nitrogen has 5 valence electrons. It shares 3 with hydrogen, leaving 2 unshared electrons, which form 1 lone pair." },
+
+            // Giant Covalent & Carbon Allotropes (26-34)
+            { q: "What term describes different physical forms of the same element in the same physical state?", options: ["Isotopes", "Isomers", "Allotropes", "Alloys"], answer: 2, explanation: "Diamond and graphite are allotropes of carbon—different structural forms of the same element." },
+            { q: "In diamond, each carbon atom is covalently bonded to how many other carbon atoms?", options: ["2", "3", "4", "6"], answer: 2, explanation: "In diamond, every carbon utilizes all 4 of its valence electrons to form strong single covalent bonds with 4 neighboring carbon atoms." },
+            { q: "The spatial arrangement of carbon atoms in a diamond crystal is best described as:", options: ["Hexagonal layers", "Linear", "Tetrahedral", "Cubic"], answer: 2, explanation: "The 4 bonds around each carbon atom are arranged in a 3D tetrahedral shape, extending throughout the entire crystal." },
+            { q: "Why is diamond an extremely hard substance?", options: ["It contains metal atoms.", "It has a rigid, continuous 3D macromolecular structure held together entirely by strong covalent bonds.", "It is compressed under high pressure.", "Its molecules are packed very tightly together."], answer: 1, explanation: "Diamond is a giant covalent structure. Breaking it requires breaking millions of strong covalent bonds, making it incredibly hard." },
+            { q: "Does diamond conduct electricity? Why or why not?", options: ["Yes, because carbon is a metal.", "Yes, because it has delocalized electrons.", "No, because all valence electrons are tied up in strong, fixed covalent bonds.", "No, because the ions cannot move."], answer: 2, explanation: "Since all 4 valence electrons of every carbon atom are involved in bonding, there are no free electrons to carry a current." },
+            { q: "In graphite, each carbon atom is covalently bonded to how many other carbon atoms?", options: ["2", "3", "4", "6"], answer: 1, explanation: "In graphite, each carbon bonds to only 3 others, forming flat, hexagonal sheets." },
+            { q: "Why does graphite conduct electricity, unlike diamond?", options: ["It is an ionic compound.", "It contains a sea of positive ions.", "Each carbon atom has one delocalized valence electron that is free to move between the layers.", "Its layers are held together by weak forces."], answer: 2, explanation: "Because each carbon only bonds to 3 others, the 4th valence electron becomes delocalized and can flow through the material, conducting electricity." },
+            { q: "Why is graphite soft and slippery, making it useful as a lubricant and in pencils?", options: ["The layers of carbon atoms are held together by weak intermolecular forces and can easily slide over each other.", "The strong covalent bonds break easily when rubbed.", "It melts at a very low temperature.", "It absorbs water from the air to become slippery."], answer: 0, explanation: "While the bonds within the hexagonal layers are strong, the forces *between* the layers are very weak, allowing them to flake off easily." },
+            { q: "Which of the following compounds has a giant covalent (macromolecular) structure similar to diamond?", options: ["Carbon dioxide (CO₂)", "Water (H₂O)", "Silicon dioxide / Sand (SiO₂)", "Sodium chloride (NaCl)"], answer: 2, explanation: "Silicon dioxide forms a massive 3D lattice of strong covalent bonds, giving sand its high melting point and hardness." },
+
+            // Metallic Bonding & Properties (35-40)
+            { q: "The structure of metallic bonding is best described as:", options: ["Sharing of electrons between two metal atoms", "Electrostatic attraction between opposite ions", "A lattice of positive metal ions in a 'sea' of delocalized valence electrons", "Individual metal molecules held by weak forces"], answer: 2, explanation: "Metals consist of a giant lattice of positive ions surrounded by a mobile 'sea' of electrons shed from their valence shells." },
+            { q: "Why are metals excellent conductors of electricity and heat?", options: ["The positive ions can move freely.", "They have low melting points.", "The delocalized electrons are highly mobile and can flow through the structure to carry charge and heat.", "They react easily with air."], answer: 2, explanation: "The 'sea' of delocalized electrons is free-moving, allowing electric current and thermal energy to pass through quickly." },
+            { q: "Metals are described as 'malleable'. What does this mean?", options: ["They can be drawn into wires.", "They can be hammered or rolled into thin sheets without breaking.", "They ring like a bell when struck.", "They reflect light well."], answer: 1, explanation: "Malleability is the ability to be hammered into sheets. Ductility is the ability to be drawn into wires." },
+            { q: "Why are metals able to be malleable and ductile without shattering like ionic crystals?", options: ["The metallic bonds are very weak.", "The layers of positive metal ions can slide over each other while the delocalized electrons shift to maintain the bonds.", "The atoms are very soft.", "They absorb heat energy easily."], answer: 1, explanation: "When force is applied, the layers of ions slide. Because the 'sea' of electrons is fluid, the metallic bonds are not broken, so the metal bends rather than shatters." },
+            { q: "In general, what kind of melting points do metallic structures have?", options: ["Very low, usually gases at room temperature", "Low, usually liquids at room temperature", "Generally high, because the electrostatic attraction between the positive ions and the electron sea is strong", "They do not have melting points; they only sublime"], answer: 2, explanation: "Metallic bonds are strong throughout the giant lattice, requiring substantial heat energy to overcome." },
+            { q: "An alloy is formed by mixing a metal with other elements. Why are alloys (like steel or brass) usually harder than pure metals?", options: ["The added elements form ionic bonds.", "The different-sized atoms distort the regular layers of the metal lattice, making it difficult for the layers to slide over each other.", "The added elements act as glue.", "Alloys have fewer delocalized electrons."], answer: 1, explanation: "Introducing atoms of different sizes disrupts the uniform layers in the pure metal, preventing them from sliding easily, which increases hardness." }
+        ];
+
+        var quizContainer = document.getElementById('quiz-questions');
+        var labels = ['A', 'B', 'C', 'D'];
+
+        function renderQuiz() {
+            quizContainer.innerHTML = '';
+            
+            for (var i = 0; i < quizData.length; i++) {
+                var item = quizData[i];
+                var index = i;
+                
+                var qBlock = document.createElement('div');
+                qBlock.className = 'question-block';
+                qBlock.id = 'qblock-' + index;
+
+                var qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerText = (index + 1) + '. ' + item.q;
+                qBlock.appendChild(qText);
+
+                var optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+
+                for (var j = 0; j < item.options.length; j++) {
+                    var optText = item.options[j];
+                    var optIndex = j;
+                    
+                    var label = document.createElement('label');
+                    label.id = 'label-' + index + '-' + optIndex;
+                    
+                    var radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'question-' + index;
+                    radio.value = optIndex;
+
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(labels[optIndex] + '. ' + optText));
+                    optionsDiv.appendChild(label);
+                }
+
+                qBlock.appendChild(optionsDiv);
+
+                var feedbackBox = document.createElement('div');
+                feedbackBox.id = 'feedback-' + index;
+                feedbackBox.className = 'feedback';
+                qBlock.appendChild(feedbackBox);
+
+                quizContainer.appendChild(qBlock);
+            }
+        }
+
+        function submitQuiz() {
+            var score = 0;
+            for (var i = 0; i < quizData.length; i++) {
+                var item = quizData[i];
+                var index = i;
+                
+                var selectedOption = document.querySelector('input[name="question-' + index + '"]:checked');
+                var feedbackBox = document.getElementById('feedback-' + index);
+                
+                // Reset styling
+                for (var j = 0; j < item.options.length; j++) {
+                    document.getElementById('label-' + index + '-' + j).classList.remove('option-correct', 'option-incorrect');
+                }
+
+                // Highlight correct answer permanently
+                document.getElementById('label-' + index + '-' + item.answer).classList.add('option-correct');
+
+                if (selectedOption) {
+                    var selectedValue = parseInt(selectedOption.value, 10);
+                    if (selectedValue === item.answer) {
+                        score++;
+                        feedbackBox.className = 'feedback correct';
+                        feedbackBox.innerHTML = '<strong>Correct!</strong> ' + item.explanation;
+                    } else {
+                        document.getElementById('label-' + index + '-' + selectedValue).classList.add('option-incorrect');
+                        feedbackBox.className = 'feedback incorrect';
+                        feedbackBox.innerHTML = '<strong>Incorrect.</strong> ' + item.explanation;
+                    }
+                } else {
+                    feedbackBox.className = 'feedback incorrect';
+                    feedbackBox.innerHTML = '<strong>No answer selected.</strong> ' + item.explanation;
+                }
+            }
+
+            // Display Results
+            document.getElementById('score').innerText = score;
+            var gradeMessage = document.getElementById('grade-message');
+            
+            if (score >= 32) gradeMessage.innerText = "Excellent Work! Grade: A (Mastery of Structure & Bonding)";
+            else if (score >= 24) gradeMessage.innerText = "Good Job! Grade: B (Solid Understanding)";
+            else if (score >= 16) gradeMessage.innerText = "Fair Effort. Grade: C (Review recommended)";
+            else if (score >= 8) gradeMessage.innerText = "Needs Improvement. Grade: D";
+            else gradeMessage.innerText = "Please review the syllabus material and try again. Grade: E";
+
+            document.getElementById('results-container').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('retake-btn').style.display = 'inline-block';
+            
+            // Scroll to results
+            document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+            
+            // Disable inputs
+            var allRadios = document.querySelectorAll('input[type="radio"]');
+            for(var k = 0; k < allRadios.length; k++) {
+                allRadios[k].disabled = true;
+            }
+        }
+
+        function retakeQuiz() {
+            document.getElementById('results-container').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'inline-block';
+            document.getElementById('retake-btn').style.display = 'none';
+            renderQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize quiz securely when document loads
+        document.addEventListener("DOMContentLoaded", function() {
+            renderQuiz();
+        });
+    </script>
+</body>
+</html>
